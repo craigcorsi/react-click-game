@@ -5,12 +5,31 @@ import logo from './logo.svg';
 import Wrapper from "./components/Wrapper";
 import StickyHeader from "./components/StickyHeader";
 import Title from "./components/Title";
+import SaladPic from "./components/SaladPic";
+
+// import data
+import salads from "./salads.json";
 
 // main styles
 import './App.css';
 
 class App extends Component {
+  salads = salads.map(function(salad){
+    salad.clicked = false;
+    return salad;
+  });
+
+  state = {
+    salads: salads
+  }
+
+  pickSalad = (event) => {
+    return event;
+  }
+
+
   render() {
+    console.log(salads);
     return (
       <Wrapper>
         <StickyHeader />
@@ -21,7 +40,14 @@ class App extends Component {
           </p>
         </div>
         <div className="game-wrapper" id="game-wrapper">
-
+          {this.state.salads.map(salad => (
+            <SaladPic
+              id={salad.id}
+              name={salad.name}
+              image={salad.image}
+              onClick={this.pickSalad}
+            />
+          ))}
         </div>
       </Wrapper>
     );
