@@ -4,11 +4,11 @@ import "./StickyHeader.css";
 const StickyHeader = props => (
     <header className="sticky-header">
         <h4>Salad Click!</h4>
-        <p>Click an image to begin!</p>
+        <p>{props.message}</p>
         <p>Score: &nbsp;
-            <span id="currentScore">0</span> 
-        &nbsp; | Top Score: &nbsp;
-            <span id="top-score">0</span> </p>
+            <span id="current-score">{props.currentScore}</span>
+            &nbsp; | Top Score: &nbsp;
+            <span id="top-score">{props.topScore}</span> </p>
     </header>
 );
 

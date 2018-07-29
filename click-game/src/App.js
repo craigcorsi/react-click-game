@@ -10,29 +10,65 @@ import SaladPic from "./components/SaladPic";
 // import data
 import salads from "./salads.json";
 
+// import Fisher-Yates shuffle
+import shuffle from "./components/Algorithms/shuffle.js";
+
 // main styles
 import './App.css';
 
 class App extends Component {
-  salads = salads.map(function(salad){
+  staticSalads = salads.map(function (salad) {
     salad.clicked = false;
     return salad;
   });
 
   state = {
-    salads: salads
+    staticSalads: this.staticSalads,
+    shufflingSalads: shuffle(this.staticSalads.slice()),
+    currentScore: 0,
+    topScore: 0,
+    message: "Click an image to begin!"
   }
 
   pickSalad = (event) => {
-    return event;
+    var id = event.target.getAttribute("data-id");
+    if (this.state.staticSalads[id].clicked) {
+      this.startOver();
+    } else {
+      this.staticSalads[id].clicked = true;
+      this.setState({ 
+        staticSalads: this.staticSalads,
+        shufflingSalads: shuffle(this.staticSalads.slice()),
+        currentScore: this.state.currentScore + 1,
+        topScore: Math.max(this.state.topScore, this.state.currentScore + 1),
+        message: "CORRECT!"
+      });
+    }
+  }
+
+  startOver = () => {
+    console.log("You lose.")
+    const resetSalads = this.staticSalads.map(function (salad) {
+      salad.clicked = false;
+      return salad;
+    });
+    this.setState({ 
+      staticSalads: resetSalads,
+      shufflingSalads: shuffle(this.staticSalads.slice()),
+      currentScore: 0,
+      message: "INCORRECT! Try again?"
+    });
   }
 
 
   render() {
-    console.log(salads);
     return (
       <Wrapper>
-        <StickyHeader />
+        <StickyHeader
+          currentScore={this.state.currentScore}
+          topScore={this.state.topScore}
+          message={this.state.message}
+        />
         <div className="App">
           <Title />
           <p className="App-intro">
@@ -40,7 +76,7 @@ class App extends Component {
           </p>
         </div>
         <div className="game-wrapper" id="game-wrapper">
-          {this.state.salads.map(salad => (
+          {this.state.shufflingSalads.map(salad => (
             <SaladPic
               id={salad.id}
               name={salad.name}
