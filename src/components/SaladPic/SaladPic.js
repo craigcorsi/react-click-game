@@ -1,13 +1,13 @@
 import React from "react";
-import "./SaladPic.css";
+import "./PaintingPic.css";
 
-const SaladPic = props => (
-    <div className="salad-pic-container"
+const PaintingPic = props => (
+    <div className="painting-pic-container"
         data-id={props.id}
         onClick={props.onClick}
     >
         <img
-            className="salad-pic"
+            className="painting-pic"
             alt={props.name}
             src={props.image}
             data-id={props.id}
@@ -15,4 +15,4 @@ const SaladPic = props => (
     </div>
 );
 
-export default SaladPic;
+export default PaintingPic;
