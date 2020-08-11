@@ -5,10 +5,10 @@ import logo from './logo.svg';
 import Wrapper from "./components/Wrapper";
 import StickyHeader from "./components/StickyHeader";
 import Title from "./components/Title";
-import SaladPic from "./components/SaladPic";
+import PaintingPic from "./components/PaintingPic";
 
 // import data
-import salads from "./salads.json";
+import paintings from "./paintings.json";
 
 // import Fisher-Yates shuffle
 import shuffle from "./components/Algorithms/shuffle.js";
@@ -17,28 +17,28 @@ import shuffle from "./components/Algorithms/shuffle.js";
 import './App.css';
 
 class App extends Component {
-  staticSalads = salads.map(function (salad) {
-    salad.clicked = false;
-    return salad;
+  staticPaintings = paintings.map(function (painting) {
+    painting.clicked = false;
+    return painting;
   });
 
   state = {
-    staticSalads: this.staticSalads,
-    shufflingSalads: shuffle(this.staticSalads.slice()),
+    staticPaintings: this.staticPaintings,
+    shufflingPaintings: shuffle(this.staticPaintings.slice()),
     currentScore: 0,
     topScore: 0,
     message: "Click an image to begin!"
   }
 
-  pickSalad = (event) => {
+  pickPainting = (event) => {
     var id = event.target.getAttribute("data-id");
-    if (this.state.staticSalads[id].clicked) {
+    if (this.state.staticPaintings[id].clicked) {
       this.startOver();
     } else {
-      this.staticSalads[id].clicked = true;
+      this.staticPaintings[id].clicked = true;
       this.setState({ 
-        staticSalads: this.staticSalads,
-        shufflingSalads: shuffle(this.staticSalads.slice()),
+        staticPaintings: this.staticPaintings,
+        shufflingPaintings: shuffle(this.staticPaintings.slice()),
         currentScore: this.state.currentScore + 1,
         topScore: Math.max(this.state.topScore, this.state.currentScore + 1),
         message: "CORRECT!"
@@ -48,13 +48,13 @@ class App extends Component {
 
   startOver = () => {
     console.log("You lose.")
-    const resetSalads = this.staticSalads.map(function (salad) {
-      salad.clicked = false;
-      return salad;
+    const resetPaintings = this.staticPaintings.map(function (painting) {
+      painting.clicked = false;
+      return painting;
     });
     this.setState({ 
-      staticSalads: resetSalads,
-      shufflingSalads: shuffle(this.staticSalads.slice()),
+      staticPaintings: resetPaintings,
+      shufflingPaintings: shuffle(this.staticPaintings.slice()),
       currentScore: 0,
       message: "INCORRECT! Try again?"
     });
@@ -76,12 +76,12 @@ class App extends Component {
           </p>
         </div>
         <div className="game-wrapper" id="game-wrapper">
-          {this.state.shufflingSalads.map(salad => (
-            <SaladPic
-              id={salad.id}
-              name={salad.name}
-              image={salad.image}
-              onClick={this.pickSalad}
+          {this.state.shufflingPaintings.map(painting => (
+            <PaintingPic
+              id={painting.id}
+              name={painting.name}
+              image={painting.image}
+              onClick={this.pickPainting}
             />
           ))}
         </div>

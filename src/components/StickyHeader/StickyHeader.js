@@ -3,7 +3,7 @@ import "./StickyHeader.css";
 
 const StickyHeader = props => (
     <header className="sticky-header">
-        <h4>Salad Click!</h4>
+        <h4>Jackson Pollock Randomizer Game!</h4>
         <p>{props.message}</p>
         <p>Score: &nbsp;
             <span id="current-score">{props.currentScore}</span>
