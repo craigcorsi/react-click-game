@@ -1,1 +1,1 @@
-export { default } from "./SaladPic";
+export { default } from "./PaintingPic";
